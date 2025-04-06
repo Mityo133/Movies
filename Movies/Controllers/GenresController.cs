@@ -24,6 +24,10 @@ namespace Movies.Controllers
         {
             return View(await _context.Genres.ToListAsync());
         }
+        public async Task<IActionResult> Catalog()
+        {
+            return View(await _context.Genres.ToListAsync());
+        }
 
         // GET: Genres/Details/5
         public async Task<IActionResult> Details(int? id)
