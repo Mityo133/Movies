@@ -26,6 +26,11 @@ namespace Movies.Controllers
             var applicationDbContext = _context.Movie.Include(m => m.Genre);
             return View(await applicationDbContext.ToListAsync());
         }
+        public async Task<IActionResult> Catalog()
+        {
+            var applicationDbContext = _context.Movie.Include(m => m.Genre);
+            return View(await applicationDbContext.ToListAsync());
+        }
 
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)

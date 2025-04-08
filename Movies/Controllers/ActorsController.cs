@@ -19,8 +19,13 @@ namespace Movies.Controllers
             _context = context;
         }
 
-        // GET: Actors
+        // Gives us the name of all the actors
         public async Task<IActionResult> Index()
+        {
+            return View(await _context.Actor.ToListAsync());
+        }
+        //This method is used to return the view of ActorsList - This will return the photo and the name of the actor.
+        public async Task<IActionResult> ActorsList()
         {
             return View(await _context.Actor.ToListAsync());
         }
@@ -55,7 +60,7 @@ namespace Movies.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName")] Actor actor)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Image")] Actor actor)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +92,7 @@ namespace Movies.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName")] Actor actor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Image")] Actor actor)
         {
             if (id != actor.Id)
             {

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Movies.Models.Actor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Actors</h1>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h1>Films</h1>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <div class="container"> <!-- Bootstrap is used to make the rows and colums-->
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-sm-2 mb-3">
+                                <!-- Bootstrap column for grid layout -->
+                                <a asp-action="Details" asp-controller="Actors" asp-route-id="@item.Id">
+                                    <img src="@item.Image" alt="Actor Image" style="width:200px;height:300px;" />
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+

@@ -1,5 +1,4 @@
 ﻿@model Movies.Models.Actor
-
 @{
     ViewData["Title"] = "Details";
 }
@@ -22,9 +21,15 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LastName)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Image)
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <!--This will return you to the view of the-->
+    <a asp-action="ActorsList">Back to List</a>
 </div>
