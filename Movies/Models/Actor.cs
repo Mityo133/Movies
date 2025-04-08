@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-         public ICollection<MovieActors> MovieActors { get; set; } 
+        public string Image { get; set; }
+         public ICollection<MovieActors>? MovieActors { get; set; } 
     }
 }

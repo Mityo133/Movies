@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movies.Data;
 
@@ -11,9 +12,11 @@ using Movies.Data;
 namespace Movies.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250407115621_FixedModels")]
+    partial class FixedModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -325,6 +328,32 @@ namespace Movies.Data.Migrations
                     b.ToTable("MovieActors");
                 });
 
+            modelBuilder.Entity("Movies.Models.Studio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DirectorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfStaff")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId")
+                        .IsUnique();
+
+                    b.ToTable("Studios");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -406,6 +435,17 @@ namespace Movies.Data.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("Movies.Models.Studio", b =>
+                {
+                    b.HasOne("Movies.Models.Movie", "Movie")
+                        .WithOne("Studio")
+                        .HasForeignKey("Movies.Models.Studio", "MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("Movies.Models.Actor", b =>
                 {
                     b.Navigation("MovieActors");
@@ -419,6 +459,8 @@ namespace Movies.Data.Migrations
             modelBuilder.Entity("Movies.Models.Movie", b =>
                 {
                     b.Navigation("MovieActors");
+
+                    b.Navigation("Studio");
                 });
 #pragma warning restore 612, 618
         }

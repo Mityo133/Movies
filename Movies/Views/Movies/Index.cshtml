@@ -27,6 +27,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
+            <th>
+                @Html.DisplayNameFor(Model => Model.Image)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -47,6 +50,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Genre.Name)
+            </td>
+            <td>
+                <img src="@Html.DisplayFor(modelItem => item.Image)" style="width:200px;height:200px;">
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
