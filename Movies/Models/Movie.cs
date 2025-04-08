@@ -12,6 +12,7 @@
         public Genres? Genre { get; set; }         // Navigation Property
 
         public string Image { get; set; }
+        public Studio? Studio { get; set; }
 
         public ICollection<MovieActors>? MovieActors { get; set; } // Many-to-Many
     }
