@@ -3,109 +3,36 @@
 @{
     ViewData["Title"] = "Details";
 }
+<div class="movie-details-container d-flex justify-content-between cat" style="color:white; display: flex; gap: 40px;">
+    <!-- Left side: Movie details -->
+    <div class="movie-info" style="flex: 2;">
+        <h4>Movie</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Name)</dd>
 
-<h1>Details</h1>
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.ReleaseYear)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.ReleaseYear)</dd>
 
-<<<<<<< HEAD
-<div>
-    <h4>Movie</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseYear)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseYear)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ratings)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ratings)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genre.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            <img src
-                ="@Html.DisplayFor(model => model.Image)"><img/>
-        </dd>
-    </dl>
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Description)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Description)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Ratings)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Ratings)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Genre)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Genre.Name)</dd>
+        </dl>
+    </div>
+
+    <!-- Right side: Image -->
+    <div class="movie-image" style="flex: 1; display: flex; align-items: flex-start;">
+        <img src="@Model.Image" alt="Movie Image" class="img-fluid" style="max-width: 100%; border-radius: 10px;" />
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-=======
-<div class="container">
-    <div class="row">
-        <!-- First Column: Movie Image -->
-        <div class="col-sm-6 text-center">
-            <img src="@Html.DisplayFor(model => model.Image)" alt="Movie Image" style="max-width: 90%; height: auto" />
-        </div>
 
-        <!-- Second Column: Movie Details -->
-        <div class="col-sm-6">
-            <dl class="row">
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.ReleaseYear)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.ReleaseYear)
-                </dd>
-
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Description)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Description)
-                </dd>
-
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Ratings)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Ratings)
-                </dd>
-
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Genre)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Genre.Name) <!-- Assuming Genre.Name is the name of the genre -->
-                </dd>
-            </dl>
-        </div>
-    </div>
-
-    <!-- Edit and Back to List links -->
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>
->>>>>>> 0eb9d0f1767e774ed799f7a69cd7470b37c92551
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>

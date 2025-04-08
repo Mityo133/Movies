@@ -25,3 +25,17 @@ body {
     background-color: rgb(140, 140, 140,0.5);
     backdrop-filter: blur(8px);
 }
+/*It is used to blue the background.*/
+.cat{
+    background-color:rgba(0,0,0,0.2);
+    backdrop-filter:blur(7px);
+    font-family:MyFont;
+    color:white;
+}
+/*Added a font*/
+@font-face {
+    font-family: 'MyFont';
+    src: url('/fonts/Calgary_DEMO.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
