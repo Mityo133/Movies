@@ -20,6 +20,8 @@ namespace Movies
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -47,6 +49,12 @@ namespace Movies
             app.MapRazorPages();
 
             app.Run();
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+                
+            });
         }
+
     }
 }

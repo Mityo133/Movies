@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,7 @@ namespace Movies.Controllers
         }
 
         // POST: Studio/Create
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,DirectorName,NumberOfStaff,Movie")] Studio studio)
@@ -76,6 +78,7 @@ namespace Movies.Controllers
         }
 
         // POST: Studio/Edit/5
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind("Id,DirectorName,NumberOfStaff,Movie")] Studio studio)
@@ -110,6 +113,7 @@ namespace Movies.Controllers
         }
 
         // GET: Studio/Delete/5
+        
         public IActionResult Delete(int id)
         {
             var studio = _context.Studios
@@ -124,6 +128,7 @@ namespace Movies.Controllers
         }
 
         // POST: Studio/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
