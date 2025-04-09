@@ -148,8 +148,7 @@ namespace Movies.Controllers
         }
 
         // POST: MovieActors/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var movieActors = await _context.MovieActors.FindAsync(id);

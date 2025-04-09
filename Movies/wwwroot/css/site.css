@@ -29,13 +29,22 @@ body {
 .cat{
     background-color:rgba(0,0,0,0.2);
     backdrop-filter:blur(7px);
-    font-family:MyFont;
+    font-family:'Courier New';
     color:white;
 }
 /*Added a font*/
 @font-face {
     font-family: 'MyFont';
-    src: url('/fonts/Calgary_DEMO.ttf') format('truetype');
+    src: url('/fonts/fon1/BerkshireSwash-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
+.but {
+    background-color: black;
+    font-family: MyFont;
+    color: white;
+}
+
+    .but:hover {
+        background-color: white;
+    }
