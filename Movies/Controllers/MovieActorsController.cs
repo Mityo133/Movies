@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,34 +20,31 @@ namespace Movies.Controllers
             _context = context;
         }
 
-        // GET: MovieActors
+        // ✅ Publicly accessible
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.MovieActors.Include(m => m.Actor).Include(m => m.Movie);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: MovieActors/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var movieActors = await _context.MovieActors
                 .Include(m => m.Actor)
                 .Include(m => m.Movie)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movieActors == null)
-            {
-                return NotFound();
-            }
+
+            if (movieActors == null) return NotFound();
 
             return View(movieActors);
         }
 
-        // GET: MovieActors/Create
+        // ✅ Admin only
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["ActorId"] = new SelectList(_context.Actor, "Id", "Id");
@@ -54,11 +52,9 @@ namespace Movies.Controllers
             return View();
         }
 
-        // POST: MovieActors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,MovieId,ActorId")] MovieActors movieActors)
         {
             if (ModelState.IsValid)
@@ -72,35 +68,25 @@ namespace Movies.Controllers
             return View(movieActors);
         }
 
-        // GET: MovieActors/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var movieActors = await _context.MovieActors.FindAsync(id);
-            if (movieActors == null)
-            {
-                return NotFound();
-            }
+            if (movieActors == null) return NotFound();
+
             ViewData["ActorId"] = new SelectList(_context.Actor, "Id", "Id", movieActors.ActorId);
             ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", movieActors.MovieId);
             return View(movieActors);
         }
 
-        // POST: MovieActors/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,MovieId,ActorId")] MovieActors movieActors)
         {
-            if (id != movieActors.Id)
-            {
-                return NotFound();
-            }
+            if (id != movieActors.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -111,52 +97,39 @@ namespace Movies.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MovieActorsExists(movieActors.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!MovieActorsExists(movieActors.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["ActorId"] = new SelectList(_context.Actor, "Id", "Id", movieActors.ActorId);
             ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", movieActors.MovieId);
             return View(movieActors);
         }
 
-        // GET: MovieActors/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var movieActors = await _context.MovieActors
                 .Include(m => m.Actor)
                 .Include(m => m.Movie)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movieActors == null)
-            {
-                return NotFound();
-            }
+
+            if (movieActors == null) return NotFound();
 
             return View(movieActors);
         }
 
-        // POST: MovieActors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var movieActors = await _context.MovieActors.FindAsync(id);
-            if (movieActors != null)
-            {
-                _context.MovieActors.Remove(movieActors);
-            }
+            if (movieActors != null) _context.MovieActors.Remove(movieActors);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
