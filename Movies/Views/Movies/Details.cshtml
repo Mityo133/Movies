@@ -4,8 +4,6 @@
     ViewData["Title"] = "Details";
 }
 
-
-
 <div class="movie-details-container cat" style="display: flex; gap: 40px; color: white;">
     <!-- Left side: Movie image -->
     <div class="movie-image" style="flex: 1; display: flex; align-items: flex-start;">
@@ -32,6 +30,25 @@
             <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Genre)</dt>
             <dd class="col-sm-8">@Html.DisplayFor(model => model.Genre.Name)</dd>
         </dl>
+
+        <!-- Actors Section -->
+        <h5 class="mt-4">Actors</h5>
+        @if (Model.MovieActors != null && Model.MovieActors.Any())
+        {
+            <div class="row">
+                @foreach (var ma in Model.MovieActors)
+                {
+                    <div class="col-md-4 text-center mb-3">
+                        <img src="@ma.Actor.Image" alt="@($"{ma.Actor.FirstName} {ma.Actor.LastName}")" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;" />
+                        <p class="mt-2">@ma.Actor.FirstName @ma.Actor.LastName</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No actors found for this movie.</p>
+        }
     </div>
 </div>
 
