@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,24 +20,24 @@ namespace Movies.Controllers
             _context = context;
         }
 
-        // Gives us the name of all the actors
+        // ✅ Public access
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Actor.ToListAsync());
         }
-        //This method is used to return the view of ActorsList - This will return the photo and the name of the actor.
+
+        [AllowAnonymous]
         public async Task<IActionResult> ActorsList()
         {
             return View(await _context.Actor.ToListAsync());
         }
 
-        // GET: Actors/Details/5
+        // ✅ Public access
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var actor = await _context.Actor
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -44,22 +45,20 @@ namespace Movies.Controllers
             {
                 return NotFound();
             }
-              
+
             return View(actor);
         }
 
-        // GET: Actors/Create
+        // ✅ Admin only
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Actors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Image")] Actor actor)
         {
             if (ModelState.IsValid)
@@ -71,33 +70,23 @@ namespace Movies.Controllers
             return View(actor);
         }
 
-        // GET: Actors/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var actor = await _context.Actor.FindAsync(id);
-            if (actor == null)
-            {
-                return NotFound();
-            }
+            if (actor == null) return NotFound();
+
             return View(actor);
         }
 
-        // POST: Actors/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Image")] Actor actor)
         {
-            if (id != actor.Id)
-            {
-                return NotFound();
-            }
+            if (id != actor.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -108,41 +97,29 @@ namespace Movies.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActorExists(actor.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!ActorExists(actor.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
             return View(actor);
         }
 
-        // GET: Actors/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var actor = await _context.Actor
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (actor == null)
-            {
-                return NotFound();
-            }
+            var actor = await _context.Actor.FirstOrDefaultAsync(m => m.Id == id);
+            if (actor == null) return NotFound();
 
             return View(actor);
         }
 
         // POST: Actors/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var actor = await _context.Actor.FindAsync(id);
