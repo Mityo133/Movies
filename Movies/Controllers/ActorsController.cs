@@ -50,15 +50,17 @@ namespace Movies.Controllers
         }
 
         // ✅ Admin only
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Image")] Actor actor)
         {
             if (ModelState.IsValid)
