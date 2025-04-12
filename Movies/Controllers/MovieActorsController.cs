@@ -25,6 +25,8 @@ namespace Movies.Controllers
             var applicationDbContext = _context.MovieActors.Include(m => m.Actor).Include(m => m.Movie);
             return View(await applicationDbContext.ToListAsync());
         }
+        //The other Index is used for the search
+       
 
         // GET: MovieActors/Details/5
         public async Task<IActionResult> Details(int? id)

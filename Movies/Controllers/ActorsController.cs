@@ -20,18 +20,31 @@ namespace Movies.Controllers
             _context = context;
         }
 
-        // ✅ Public access
-        [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        // ✅ Admin accses
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Actor.ToListAsync());
+            var movies = from m in _context.Actor
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(s => s.FirstName.Contains(searchString));
+            }
+
+            return View(await movies.ToListAsync());
         }
 
         [AllowAnonymous]
+
         public async Task<IActionResult> ActorsList()
         {
-            return View(await _context.Actor.ToListAsync());
+            // Fetch all actors without filtering
+            var actors = await _context.Actor.ToListAsync();
+            return View(actors);
         }
+
+
 
         // ✅ Public access
         [AllowAnonymous]

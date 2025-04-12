@@ -26,11 +26,24 @@ namespace Movies.Controllers
             var applicationDbContext = _context.Movie.Include(m => m.Genre);
             return View(await applicationDbContext.ToListAsync());
         }
-        public async Task<IActionResult> Catalog()
+        //public async Task<IActionResult> Catalog()
+        //{
+        //    var applicationDbContext = _context.Movie.Include(m => m.Genre);
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
+        public async Task<IActionResult> Catalog(string searchString)
         {
-            var applicationDbContext = _context.Movie.Include(m => m.Genre);
-            return View(await applicationDbContext.ToListAsync());
+            var movies = from m in _context.Movie
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View(await movies.ToListAsync());
         }
+
 
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -133,33 +146,38 @@ namespace Movies.Controllers
        
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var movie = await _context.Movie
-                .Include(m => m.Genre)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
+            var movie = await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
+            if (movie == null) return NotFound();
 
             return View(movie);
         }
 
         // POST: Movies/Delete/5
-        
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // First, remove the MovieActors entry
+            var movieActors = await _context.MovieActors
+                .FirstOrDefaultAsync(ma => ma.MovieId == id); // Assuming MovieId is the foreign key
+            if (movieActors != null)
+            {
+                _context.MovieActors.Remove(movieActors);
+            }
+
+            // Now, remove the actual Movie entry (if it's not already removed by the first step)
             var movie = await _context.Movie.FindAsync(id);
             if (movie != null)
             {
                 _context.Movie.Remove(movie);
             }
 
+            // Commit both deletions
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

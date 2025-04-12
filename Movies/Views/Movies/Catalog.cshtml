@@ -3,35 +3,42 @@
 @{
     ViewData["Title"] = "Index";
 }
+<form asp-controller="Movies" asp-action="Catalog">
+    <p style="color:white">
+        Title:<input type="text" name="SearchString" style="background-color:darkgrey;">
+        <input type="submit" value="Filter" style="border-radius:12px;"/>
+    </p>
+</form>
 
 <div class="cat">
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <h1 style="color:white;">Films</h1>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <div class="container">
-                    <div class="row">
-                        @foreach (var item in Model)
-                        {
-                            <div class="col-sm-2 mb-3">
-                                <!-- Bootstrap column for grid layout -->
-                                <a asp-action="Details" asp-controller="Movies" asp-route-id="@item.Id">
-                                    <img src="@item.Image" alt="Movie Image" style="width:auto;height:200px" />
-                                </a>
-                            </div>
-                        }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <h1 style="color:white;">Films</h1>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="container">
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-sm-2 mb-4">
+                                    <!-- Added mb-4 for margin-bottom -->
+                                    <!-- Bootstrap column for grid layout -->
+                                    <a asp-action="Details" asp-controller="Movies" asp-route-id="@item.Id">
+                                        <img src="@item.Image" alt="Movie Image" class="img-fluid" style="width:100%; height: auto; border-radius: 8px;" />
+                                    </a>
+                                </div>
+                            }
+                        </div>
                     </div>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
