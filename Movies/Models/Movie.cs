@@ -13,6 +13,6 @@
 
         public string Image { get; set; }
 
-        public ICollection<MovieActors>? MovieActors { get; set; } // Many-to-Many
+        public ICollection<MovieActors>? MovieActors { get; set; } = new List<MovieActors>();// Many-to-Many
     }
 }

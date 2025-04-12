@@ -39,7 +39,9 @@
                 @foreach (var ma in Model.MovieActors)
                 {
                     <div class="col-md-4 text-center mb-3">
-                        <img src="@ma.Actor.Image" alt="@($"{ma.Actor.FirstName} {ma.Actor.LastName}")" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;" />
+                        <!--Ще те изпрати към детайли на актьра,когато го натиснеш.-->
+                        <a asp-controller="Actors" asp-action="Details" asp-route-id="@ma.Id">
+                        <img src="@ma.Actor.Image" alt="@($"{ma.Actor.FirstName} {ma.Actor.LastName}")" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;"/></a>
                         <p class="mt-2">@ma.Actor.FirstName @ma.Actor.LastName</p>
                     </div>
                 }

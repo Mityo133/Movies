@@ -12,7 +12,7 @@ namespace Movies
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                                   ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -21,12 +21,11 @@ namespace Movies
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false; // Important for login without email confirmation
             })
-                .AddRoles<IdentityRole>() // Enable roles
+                .AddRoles<IdentityRole>() // Add support for roles
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            // Define role-based policies
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
@@ -37,7 +36,7 @@ namespace Movies
 
             var app = builder.Build();
 
-            // Seed roles and admin user
+            // Seed Roles and Admin User
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -58,10 +57,22 @@ namespace Movies
                 var adminUser = await userManager.FindByEmailAsync(adminEmail);
                 if (adminUser == null)
                 {
-                    var user = new IdentityUser { UserName = adminEmail, Email = adminEmail };
+                    var user = new IdentityUser
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true // Mark email as confirmed if confirmation is off
+                    };
+
                     var result = await userManager.CreateAsync(user, adminPassword);
                     if (result.Succeeded)
+                    {
                         await userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    else
+                    {
+                        // Optional: log result.Errors here if needed
+                    }
                 }
             }
 
@@ -81,7 +92,7 @@ namespace Movies
 
             app.UseRouting();
 
-            app.UseAuthentication(); // Always before Authorization
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
@@ -94,3 +105,5 @@ namespace Movies
         }
     }
 }
+
+

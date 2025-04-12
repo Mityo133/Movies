@@ -1,18 +1,18 @@
 ﻿@model Movies.Models.Actor
+
 @{
     ViewData["Title"] = "Details";
 }
 
-
 <div class="movie-details-container cat" style="display: flex; gap: 40px; color: white;">
-    <!-- Left side: Movie image -->
-    <div class="movie-image" style="flex: 1; display: flex; align-items: flex-start;">
-        <img src="@Model.Image" alt="Movie Image" class="img-fluid" style="max-width: 100%; border-radius: 10px;" />
+    <!-- Left side: Actor image -->
+    <div class="actor-image" style="flex: 1; display: flex; align-items: flex-start;">
+        <img src="@Model.Image" alt="Actor Image" class="img-fluid" style="max-width: 100%; border-radius: 10px;" />
     </div>
 
-    <!-- Right side: Movie details -->
-    <div class="movie-info" style="flex: 2;">
-        <h4>Movie</h4>
+    <!-- Right side: Actor details -->
+    <div class="actor-info" style="flex: 2;">
+        <h4>Actor</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-4">@Html.DisplayNameFor(model => model.FirstName)</dt>
@@ -21,9 +21,17 @@
             <dt class="col-sm-4">@Html.DisplayNameFor(model => model.LastName)</dt>
             <dd class="col-sm-8">@Html.DisplayFor(model => model.LastName)</dd>
         </dl>
+        <h4>Movies the Actor Has Played In:</h4>
+        <ul>
+            @foreach (var movieActor in Model.MovieActors)
+            {
+                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movieActor.Id">
+                    <img src="@movieActor.Movie.Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;"/></a>
+                <li class="mt-2">@movieActor.Movie.Name</li> <!-- Displaying movie names -->
+            }
+        </ul>
     </div>
 </div>
-<h1>Movies</h1>
 
 
 

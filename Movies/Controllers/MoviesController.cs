@@ -41,15 +41,18 @@ namespace Movies.Controllers
             }
 
             var movie = await _context.Movie
-                .Include(m => m.Genre)  // Include Genre data
-                .Include(m => m.MovieActors) // Include Actors data if many-to-many relationship exists
+                .Include(m => m.Genre)
+                .Include(m => m.MovieActors)
+                    .ThenInclude(ma => ma.Actor) // 👈 This is the key line you're missing
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (movie == null)
             {
                 return NotFound();
             }
 
             return View(movie);
+
         }
 
         // GET: Movies/Create

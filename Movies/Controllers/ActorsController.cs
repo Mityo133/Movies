@@ -37,10 +37,17 @@ namespace Movies.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            // Retrieve the actor with their associated movies
             var actor = await _context.Actor
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(a => a.MovieActors)  // Include the related MovieActors
+                .ThenInclude(ma => ma.Movie)  // Include the related Movie entity
+                .FirstOrDefaultAsync(a => a.Id == id);
+
             if (actor == null)
             {
                 return NotFound();
@@ -50,17 +57,17 @@ namespace Movies.Controllers
         }
 
         // ✅ Admin only
-        // [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Image")] Actor actor)
         {
             if (ModelState.IsValid)
