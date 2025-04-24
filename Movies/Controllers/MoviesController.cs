@@ -19,7 +19,8 @@ namespace Movies.Controllers
         {
             _context = context;
         }
-
+        //Admin Aceses
+        [Authorize(Roles="Admin")]
         // GET: Movies
         public async Task<IActionResult> Index()
         {
@@ -67,7 +68,7 @@ namespace Movies.Controllers
             return View(movie);
 
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Movies/Create
         public IActionResult Create()
         {
@@ -79,6 +80,7 @@ namespace Movies.Controllers
         // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Name,ReleaseYear,Description,Ratings,GenreId,Image")] Movie movie)
         {
             if (ModelState.IsValid)
@@ -92,6 +94,7 @@ namespace Movies.Controllers
         }
 
         // GET: Movies/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,6 +110,7 @@ namespace Movies.Controllers
             ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movie.GenreId);
             return View(movie);
         }
+        [Authorize(Roles = "Admin")]
 
         // POST: Movies/Edit/5
         [HttpPost]
@@ -143,7 +147,7 @@ namespace Movies.Controllers
         }
 
         // GET: Movies/Delete/5
-       
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -155,7 +159,7 @@ namespace Movies.Controllers
         }
 
         // POST: Movies/Delete/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

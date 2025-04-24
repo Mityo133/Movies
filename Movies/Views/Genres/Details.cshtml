@@ -1,22 +1,27 @@
 ﻿@model Movies.Models.Genres
 
-@{
-    ViewData["Title"] = "Details";
+<h1>@Model.Name</h1>
+
+<h3>Movies in the Genre: @Model.Name</h3>
+<div class="actor-info" style="flex: 2;">
+<div class="col-sm-2 mb-4">
+@if (Model.Movies != null && Model.Movies.Any())
+{
+    @foreach (var movieActor in Model.Movies)
+    {
+      
+        <a asp-action="Details" asp-controller="Movies" asp-route-id="@movieActor.Id">
+            <img src="@movieActor.Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;" />
+        </a>
+        <li class="mt-2" style="color:white;">@movieActor.Name</li> <!-- Displaying movie names -->
+        
+    }
 }
-
-<h1>Details</h1>
-
-<div>
-    <h4>Genres</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
+else
+{
+    <p>No movies found in this genre.</p>
+}
+</div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |

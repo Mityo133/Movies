@@ -33,19 +33,18 @@ namespace Movies.Controllers
         // GET: Genres/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            // Find the genre along with the related movies
+            var genre = await _context.Genres
+                .Include(g => g.Movies)  // Include the Movies collection
+                .FirstOrDefaultAsync(g => g.Id == id);
+
+            if (genre == null)
             {
                 return NotFound();
             }
 
-            var genres = await _context.Genres
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (genres == null)
-            {
-                return NotFound();
-            }
-
-            return View(genres);
+            // Pass the genre to the view
+            return View(genre);
         }
 
         // GET: Genres/Create
