@@ -27,7 +27,11 @@ namespace Movies.Controllers
         }
         public async Task<IActionResult> Catalog()
         {
-            return View(await _context.Genres.ToListAsync());
+            var genresWithMovies = await _context.Genres
+                                        .Include(g => g.Movies)  // Ensure Movies are included
+                                        .ToListAsync();
+
+            return View(genresWithMovies);
         }
 
         // GET: Genres/Details/5

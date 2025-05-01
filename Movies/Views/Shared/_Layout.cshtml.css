@@ -12,27 +12,22 @@ a {
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color:darkseagreen;
+
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: darkseagreen;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 5px 8px blue, 10px 10px 8px #d6cbd3, 15px 15px 8px #3e4444;
+    margin: 20px;
 }
 
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
 
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
 
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
+.
 
 button.accept-policy {
     font-size: 1rem;
