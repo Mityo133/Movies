@@ -10,9 +10,24 @@ namespace Movies.Data
             : base(options)
         {
         }
-        public DbSet<Movies.Models.Actor> Actor { get; set; } = default!;
-        public DbSet<Movies.Models.Genres> Genres { get; set; } = default!;
-        public DbSet<Movies.Models.Movie> Movie { get; set; } = default!;
-        public DbSet<Movies.Models.MovieActors> MovieActors { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+           
+            modelBuilder.Entity<MovieActors>()
+                .HasKey(ma => new { ma.MovieId, ma.ActorId });
+
+   
+            modelBuilder.Entity<Popularity>()
+                .HasKey(p => p.MovieId);
+        }
+
+        public DbSet<Actor> Actor { get; set; } = default!;
+        public DbSet<Genres> Genres { get; set; } = default!;
+        public DbSet<Movie> Movie { get; set; } = default!;
+        public DbSet<MovieActors> MovieActors { get; set; } = default!;
+        public DbSet<Popularity> Popularity { get; set; } = default!;
     }
 }

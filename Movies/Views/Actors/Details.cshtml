@@ -25,7 +25,7 @@
         <ul>
             @foreach (var movieActor in Model.MovieActors)
             {
-                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movieActor.Id">
+                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movieActor.MovieId">
                     <img src="@movieActor.Movie.Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;"/></a>
                 <li class="mt-2">@movieActor.Movie.Name</li> <!-- Displaying movie names -->
             }

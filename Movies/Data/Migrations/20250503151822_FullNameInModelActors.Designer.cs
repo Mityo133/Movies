@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movies.Data;
 
@@ -11,9 +12,11 @@ using Movies.Data;
 namespace Movies.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250503151822_FullNameInModelActors")]
+    partial class FullNameInModelActors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,38 +310,25 @@ namespace Movies.Data.Migrations
 
             modelBuilder.Entity("Movies.Models.MovieActors", b =>
                 {
-                    b.Property<int>("MovieId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ActorId")
                         .HasColumnType("int");
 
-                    b.HasKey("MovieId", "ActorId");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("ActorId");
 
+                    b.HasIndex("MovieId");
+
                     b.ToTable("MovieActors");
-                });
-
-            modelBuilder.Entity("Movies.Models.Popularity", b =>
-                {
-                    b.Property<int>("MovieId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieId"));
-
-                    b.Property<int>("MovieId1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Views")
-                        .HasColumnType("int");
-
-                    b.HasKey("MovieId");
-
-                    b.HasIndex("MovieId1");
-
-                    b.ToTable("Popularity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -418,17 +408,6 @@ namespace Movies.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Actor");
-
-                    b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("Movies.Models.Popularity", b =>
-                {
-                    b.HasOne("Movies.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Movie");
                 });

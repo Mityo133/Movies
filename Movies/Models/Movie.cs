@@ -6,7 +6,24 @@
         public string Name { get; set; }
         public int ReleaseYear { get; set; }
         public string Description { get; set; }
-        public double Ratings { get; set; }
+        private double _ratings;
+        public double Ratings
+        {
+            get => _ratings;
+            set
+            {
+                if (value >= 0 && value <= 10)
+                {
+                    _ratings = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "Ratings must be between 0 and 10.");
+                }
+
+            }
+        }
+
 
         public int GenreId { get; set; }           // Foreign Key
         public Genres? Genre { get; set; }         // Navigation Property

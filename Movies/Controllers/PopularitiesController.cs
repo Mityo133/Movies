@@ -10,23 +10,22 @@ using Movies.Models;
 
 namespace Movies.Controllers
 {
-    public class MovieActorsController : Controller
+    public class PopularitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public MovieActorsController(ApplicationDbContext context)
+        public PopularitiesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: MovieActors
+        // GET: Popularities
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.MovieActors.Include(m => m.Actor).Include(m => m.Movie);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Popularity.ToListAsync());
         }
 
-        // GET: MovieActors/Details/5
+        // GET: Popularities/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,45 +33,39 @@ namespace Movies.Controllers
                 return NotFound();
             }
 
-            var movieActors = await _context.MovieActors
-                .Include(m => m.Actor)
-                .Include(m => m.Movie)
+            var popularity = await _context.Popularity
                 .FirstOrDefaultAsync(m => m.MovieId == id);
-            if (movieActors == null)
+            if (popularity == null)
             {
                 return NotFound();
             }
 
-            return View(movieActors);
+            return View(popularity);
         }
 
-        // GET: MovieActors/Create
+        // GET: Popularities/Create
         public IActionResult Create()
         {
-            ViewData["ActorId"] = new SelectList(_context.Actor, "Id", "Id");
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id");
             return View();
         }
 
-        // POST: MovieActors/Create
+        // POST: Popularities/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,ActorId")] MovieActors movieActors)
+        public async Task<IActionResult> Create([Bind("MovieId,Views")] Popularity popularity)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(movieActors);
+                _context.Add(popularity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ActorId"] = new SelectList(_context.Actor, "Id", "Id", movieActors.ActorId);
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", movieActors.MovieId);
-            return View(movieActors);
+            return View(popularity);
         }
 
-        // GET: MovieActors/Edit/5
+        // GET: Popularities/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,24 +73,22 @@ namespace Movies.Controllers
                 return NotFound();
             }
 
-            var movieActors = await _context.MovieActors.FindAsync(id);
-            if (movieActors == null)
+            var popularity = await _context.Popularity.FindAsync(id);
+            if (popularity == null)
             {
                 return NotFound();
             }
-            ViewData["ActorId"] = new SelectList(_context.Actor, "Id", "Id", movieActors.ActorId);
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", movieActors.MovieId);
-            return View(movieActors);
+            return View(popularity);
         }
 
-        // POST: MovieActors/Edit/5
+        // POST: Popularities/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,ActorId")] MovieActors movieActors)
+        public async Task<IActionResult> Edit(int id, [Bind("MovieId,Views")] Popularity popularity)
         {
-            if (id != movieActors.MovieId)
+            if (id != popularity.MovieId)
             {
                 return NotFound();
             }
@@ -106,12 +97,12 @@ namespace Movies.Controllers
             {
                 try
                 {
-                    _context.Update(movieActors);
+                    _context.Update(popularity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MovieActorsExists(movieActors.MovieId))
+                    if (!PopularityExists(popularity.MovieId))
                     {
                         return NotFound();
                     }
@@ -122,12 +113,10 @@ namespace Movies.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ActorId"] = new SelectList(_context.Actor, "Id", "Id", movieActors.ActorId);
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", movieActors.MovieId);
-            return View(movieActors);
+            return View(popularity);
         }
 
-        // GET: MovieActors/Delete/5
+        // GET: Popularities/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,36 +124,34 @@ namespace Movies.Controllers
                 return NotFound();
             }
 
-            var movieActors = await _context.MovieActors
-                .Include(m => m.Actor)
-                .Include(m => m.Movie)
+            var popularity = await _context.Popularity
                 .FirstOrDefaultAsync(m => m.MovieId == id);
-            if (movieActors == null)
+            if (popularity == null)
             {
                 return NotFound();
             }
 
-            return View(movieActors);
+            return View(popularity);
         }
 
-        // POST: MovieActors/Delete/5
+        // POST: Popularities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var movieActors = await _context.MovieActors.FindAsync(id);
-            if (movieActors != null)
+            var popularity = await _context.Popularity.FindAsync(id);
+            if (popularity != null)
             {
-                _context.MovieActors.Remove(movieActors);
+                _context.Popularity.Remove(popularity);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MovieActorsExists(int id)
+        private bool PopularityExists(int id)
         {
-            return _context.MovieActors.Any(e => e.MovieId == id);
+            return _context.Popularity.Any(e => e.MovieId == id);
         }
     }
 }
