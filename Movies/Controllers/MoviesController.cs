@@ -185,5 +185,10 @@ namespace Movies.Controllers
         {
             return _context.Movie.Any(e => e.Id == id);
         }
+
+        public void Movie(int moveX, int moveY)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
