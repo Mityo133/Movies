@@ -28,7 +28,10 @@
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(Model => Model.Image)
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Trailer)
             </th>
             <th></th>
         </tr>
@@ -49,10 +52,13 @@
                 @Html.DisplayFor(modelItem => item.Ratings)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Genre.Name)
+                @Html.DisplayFor(modelItem => item.Genre.Id)
             </td>
             <td>
-                <img src="@Html.DisplayFor(modelItem => item.Image)" style="width:200px;height:200px;">
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trailer)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

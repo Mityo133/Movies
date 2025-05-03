@@ -20,7 +20,7 @@ namespace Movies.Controllers
             _context = context;
         }
         //Admin Aceses
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         // GET: Movies
         public async Task<IActionResult> Index()
         {
@@ -32,7 +32,7 @@ namespace Movies.Controllers
         //    var applicationDbContext = _context.Movie.Include(m => m.Genre);
         //    return View(await applicationDbContext.ToListAsync());
         //}
-        public async Task<IActionResult> Catalog(string nameFilter,int? yearFilter,string? sortbyName)
+        public async Task<IActionResult> Catalog(string nameFilter, int? yearFilter,string? OptionToSortBy)
         {
             var movies = from m in _context.Movie
                          select m;
@@ -41,11 +41,33 @@ namespace Movies.Controllers
             {
                 movies = movies.Where(s => s.Name.Contains(nameFilter));
             }
-            if(yearFilter.HasValue)
+            if (yearFilter.HasValue)
             {
                 movies = movies.Where(s => s.ReleaseYear == yearFilter);
             }
-            return View("Catalog",await movies.ToListAsync());
+            if (!String.IsNullOrEmpty(OptionToSortBy))
+            {
+                if (OptionToSortBy == "AZ")
+                {
+                    movies = movies.OrderByDescending(s => s.Name).Reverse();
+                }else if(OptionToSortBy == "ZA")
+                {
+                    movies = movies.OrderByDescending(s => s.Name);
+                }else if(OptionToSortBy =="Year-De")
+                {
+                    movies = movies.OrderByDescending(s=>s.ReleaseYear);
+                }else if(OptionToSortBy == "Year-Ac")
+                {
+                    movies = movies.OrderBy(s => s.ReleaseYear);
+                }else if (OptionToSortBy == "Low-Rating")
+                {
+                    movies = movies.OrderBy(s => s.Ratings);
+                }else if (OptionToSortBy =="High-Rating")
+                {
+                    movies = movies.OrderByDescending(s => s.Ratings);
+                }
+            }
+            return View("Catalog", await movies.ToListAsync());
         }
 
 

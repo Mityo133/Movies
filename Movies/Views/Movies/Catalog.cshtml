@@ -3,19 +3,23 @@
 @{
     ViewData["Title"] = "Catalog";
 }
-<form asp-action="Catalog" asp-controller="Movies" method="get" class="mb-4">
+<form asp-action="Catalog" asp-controller="Movies" method="get" class="mb-4 form">
     <div class="form-row">
         <div class="form-group col-md-4">
-            <input type="text" name="nameFilter" value="@Context.Request.Query["nameFilter"]" class="form-control" placeholder="Search by name" />
+            <input type="text" name="nameFilter" value="@Context.Request.Query["nameFilter"]" class="form-control" style="width:300px;"placeholder="Search by name" />
         </div>
         <div class="form-group col-md-3">
-            <input type="number" name="yearFilter" value="@Context.Request.Query["yearFilter"]" class="form-control" placeholder="Year" />
+            <input type="number" name="yearFilter" value="@Context.Request.Query["yearFilter"]" class="form-control" style="width:300px;" placeholder="Year" />
         </div>
-        <select  id="cars" name="sortbyName" class="form-control">
-  <option value="volvo">Yes</option>
-  <option value="No">No</option>
- 
-</select>
+        <select id="OptionToSortBy" name="OptionToSortBy" style="width:300px;" class="form-control">
+            <option value="" disabled selected>Choose an option to sort by</option>
+            <option value="AZ">A-Z</option>
+            <option value="ZA">Z-A</option>
+            <option value="Year-De">Year-Descending</option>
+            <option value="Year-Ac">Year-Ascending</option>
+            <option value="Low-Rating">Lowest Ratings</option>
+            <option value="High-Rating">High Rating</option>
+        </select>
         <div class="form-group col-md-2">
             <button type="submit" class="btn btn-primary">Filter</button>
         </div>
