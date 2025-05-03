@@ -32,17 +32,20 @@ namespace Movies.Controllers
         //    var applicationDbContext = _context.Movie.Include(m => m.Genre);
         //    return View(await applicationDbContext.ToListAsync());
         //}
-        public async Task<IActionResult> Catalog(string searchString)
+        public async Task<IActionResult> Catalog(string nameFilter,int? yearFilter,string? sortbyName)
         {
             var movies = from m in _context.Movie
                          select m;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(nameFilter))
             {
-                movies = movies.Where(s => s.Name.Contains(searchString));
+                movies = movies.Where(s => s.Name.Contains(nameFilter));
             }
-
-            return View(await movies.ToListAsync());
+            if(yearFilter.HasValue)
+            {
+                movies = movies.Where(s => s.ReleaseYear == yearFilter);
+            }
+            return View("Catalog",await movies.ToListAsync());
         }
 
 

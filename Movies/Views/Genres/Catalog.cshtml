@@ -4,7 +4,7 @@
     ViewData["Title"] = "Genres and Movies";
 }
 
-<h1>Genres and Movies</h1>
+
 
 <div class="cat">
     <table class="table">
@@ -20,14 +20,15 @@
             {
                 <tr>
                     <td>
-                        <h3>@genre.Name</h3> <!-- Display Genre Name -->
+                        <h3 style="color:white">@genre.Name</h3> <!-- Display Genre Name -->
                         <div class="container">
                             <div class="row">
+                                <!-- Add g-3 for spacing -->
                                 @foreach (var movie in genre.Movies)
                                 {
                                     <div class="col-sm-2 mb-3">
-                                        <a asp-action="Details" asp-controller="Films" asp-route-id="@movie.Id">
-                                            <img src="@movie.Image" alt="@movie.Name" style="width:250px;height:300px;border:solid 1px;" />
+                                        <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.Id">
+                                            <img src="@movie.Image" alt="@movie.Name" style="width:100%;height:auto;border:solid 8px;" />
                                             <h4>@movie.Name</h4>
                                             <p>Release Year: @movie.ReleaseYear</p>
                                             <p>Ratings: @movie.Ratings</p>
@@ -36,6 +37,7 @@
                                 }
                             </div>
                         </div>
+
                     </td>
                 </tr>
             }
