@@ -29,7 +29,8 @@ body {
 .cat {
     background-color: rgba(0,0,0,0.2);
     backdrop-filter: blur(7px);
-    font-family: 'Courier New';
+    /*font-family: 'Courier New';*/
+    font-family:'MyFont';
     color: white;
 }
 /*Added a font*/

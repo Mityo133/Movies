@@ -40,8 +40,10 @@ namespace Movies.Controllers
         public async Task<IActionResult> ActorsList()
         {
             // Fetch all actors without filtering
-            var actors = await _context.Actor.ToListAsync();
-            return View(actors);
+            var actors = from m in _context.Actor
+                         select m;
+            return View(await actors.ToListAsync());
+
         }
 
 

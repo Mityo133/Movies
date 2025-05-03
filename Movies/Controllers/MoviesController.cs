@@ -19,7 +19,8 @@ namespace Movies.Controllers
         {
             _context = context;
         }
-
+        //Admin Aceses
+        [Authorize(Roles="Admin")]
         // GET: Movies
         public async Task<IActionResult> Index()
         {
@@ -31,17 +32,20 @@ namespace Movies.Controllers
         //    var applicationDbContext = _context.Movie.Include(m => m.Genre);
         //    return View(await applicationDbContext.ToListAsync());
         //}
-        public async Task<IActionResult> Catalog(string searchString)
+        public async Task<IActionResult> Catalog(string nameFilter,int? yearFilter,string? sortbyName)
         {
             var movies = from m in _context.Movie
                          select m;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(nameFilter))
             {
-                movies = movies.Where(s => s.Name.Contains(searchString));
+                movies = movies.Where(s => s.Name.Contains(nameFilter));
             }
-
-            return View(await movies.ToListAsync());
+            if(yearFilter.HasValue)
+            {
+                movies = movies.Where(s => s.ReleaseYear == yearFilter);
+            }
+            return View("Catalog",await movies.ToListAsync());
         }
 
 
@@ -67,7 +71,7 @@ namespace Movies.Controllers
             return View(movie);
 
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Movies/Create
         public IActionResult Create()
         {
@@ -79,6 +83,7 @@ namespace Movies.Controllers
         // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Name,ReleaseYear,Description,Ratings,GenreId,Image")] Movie movie)
         {
             if (ModelState.IsValid)
@@ -92,6 +97,7 @@ namespace Movies.Controllers
         }
 
         // GET: Movies/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,6 +113,7 @@ namespace Movies.Controllers
             ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movie.GenreId);
             return View(movie);
         }
+        [Authorize(Roles = "Admin")]
 
         // POST: Movies/Edit/5
         [HttpPost]
@@ -143,7 +150,7 @@ namespace Movies.Controllers
         }
 
         // GET: Movies/Delete/5
-       
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -155,7 +162,7 @@ namespace Movies.Controllers
         }
 
         // POST: Movies/Delete/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
