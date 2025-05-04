@@ -30,7 +30,7 @@
 
         public string Image { get; set; }
 
-        public string? Trailer { get; set; }
+        public string Trailer { get; set; }
 
         public ICollection<MovieActors>? MovieActors { get; set; } = new List<MovieActors>();// Many-to-Many
     }
