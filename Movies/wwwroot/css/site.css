@@ -78,3 +78,16 @@ body {
     .movie-poster:hover {
         transform: scale(1.05);
     }
+
+.slide-up {
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideUp 2s ease-out forwards;
+}
+
+@keyframes slideUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
