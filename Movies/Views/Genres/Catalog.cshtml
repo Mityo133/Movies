@@ -28,12 +28,12 @@
                                 {
                                     <div class="col-sm-2 mb-3">
                                         <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.Id">
-                                            <img src="@movie.Image" alt="@movie.Name" style="width:100%;height:auto;border:solid 8px;" />
-                                            <h4>@movie.Name</h4>
-                                            <p>Release Year: @movie.ReleaseYear</p>
-                                            <p>Ratings: @movie.Ratings</p>
+                                            <img src="@movie.Image" alt="@movie.Name" style="width:100%;height:auto;" />
                                         </a>
                                     </div>
+                                    <h4>@movie.Name</h4>
+                                    <p>Release Year: @movie.ReleaseYear</p>
+                                    <p>Ratings: @movie.Ratings</p>
                                 }
                             </div>
                         </div>

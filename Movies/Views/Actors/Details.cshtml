@@ -23,12 +23,25 @@
         </dl>
         <h4>Movies the Actor Has Played In:</h4>
         <ul>
-            @foreach (var movieActor in Model.MovieActors)
-            {
-                <a asp-action="Details" asp-controller="Movies" asp-route-id="@movieActor.MovieId">
-                    <img src="@movieActor.Movie.Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;"/></a>
-                <li class="mt-2">@movieActor.Movie.Name</li> <!-- Displaying movie names -->
-            }
+                @if (Model.MovieActors == null || !Model.MovieActors.Any())
+                {
+                    <li>No movies found for this actor.</li>
+                }
+                else
+                {
+                    foreach (var movieActor in Model.MovieActors)
+                    {
+                        <div class="mb-3">
+                            <a asp-action="Details" asp-controller="Movies" asp-route-id="@movieActor.MovieId">
+                                <img src="@movieActor.Movie?.Image" alt="@movieActor.Movie?.Name"
+                                     style="width: 200px; height: 300px; object-fit: cover; border-radius: 10px;" />
+                            </a>
+                        <li class="mt-2">@movieActor.Movie?.Name</li>
+                </div>
+                    }
+                }
+              
+           
         </ul>
     </div>
 </div>
