@@ -91,3 +91,11 @@ body {
         opacity: 1;
     }
 }
+.bot {
+    color: white !important;
+    border-radius:10px;
+}
+.bot:hover {
+    color: black !important;
+    background-color: white !important;
+}
