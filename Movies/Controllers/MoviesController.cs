@@ -32,7 +32,7 @@ namespace Movies.Controllers
         //    var applicationDbContext = _context.Movie.Include(m => m.Genre);
         //    return View(await applicationDbContext.ToListAsync());
         //}
-        public async Task<IActionResult> Catalog(string nameFilter, int? yearFilter,string? OptionToSortBy)
+        public async Task<IActionResult> Catalog(string nameFilter, int? yearFilter, string? OptionToSortBy)
         {
             var movies = from m in _context.Movie
                          select m;
@@ -50,22 +50,32 @@ namespace Movies.Controllers
                 if (OptionToSortBy == "AZ")
                 {
                     movies = movies.OrderByDescending(s => s.Name).Reverse();
-                }else if(OptionToSortBy == "ZA")
+                }
+                else if (OptionToSortBy == "ZA")
                 {
                     movies = movies.OrderByDescending(s => s.Name);
-                }else if(OptionToSortBy =="Year-De")
+                }
+                else if (OptionToSortBy == "Year-De")
                 {
-                    movies = movies.OrderByDescending(s=>s.ReleaseYear);
-                }else if(OptionToSortBy == "Year-Ac")
+                    movies = movies.OrderByDescending(s => s.ReleaseYear);
+                }
+                else if (OptionToSortBy == "Year-Ac")
                 {
                     movies = movies.OrderBy(s => s.ReleaseYear);
-                }else if (OptionToSortBy == "Low-Rating")
+                }
+                else if (OptionToSortBy == "Low-Rating")
                 {
                     movies = movies.OrderBy(s => s.Ratings);
-                }else if (OptionToSortBy =="High-Rating")
+                }
+                else if (OptionToSortBy == "High-Rating")
                 {
                     movies = movies.OrderByDescending(s => s.Ratings);
                 }
+                else if (OptionToSortBy == "Genre")
+                {
+                    movies = movies.OrderByDescending(s => s.Genre);
+                }
+                
             }
             return View("Catalog", await movies.ToListAsync());
         }

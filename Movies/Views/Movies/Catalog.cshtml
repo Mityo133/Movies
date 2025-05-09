@@ -19,6 +19,7 @@
             <option value="Year-Ac">Year-Ascending</option>
             <option value="Low-Rating">Lowest Ratings</option>
             <option value="High-Rating">High Rating</option>
+            <option value="Genre">Genre</option>
         </select>
         <div class="form-group col-md-2">
             <button type="submit" class="btn btn-primary">Filter</button>
@@ -50,8 +51,8 @@
                                     <a asp-action="Details" asp-controller="Movies" asp-route-id="@item.Id">
                                         <img src="@item.Image" alt="Movie Image" class="img-fluid" style="width:100%; height: auto; border-radius: 8px;" />
                                     </a>
-                                    <h3 class="text-white">@item.Name</h3>
-                                    <h3 class="text-white">@item.Ratings</h3>
+                                    <h4 class="text-white">@item.Name</h4>
+                                    <h4 class="text-white">Rating: @item.Ratings</h4>
                                 </div>
                                
                             }
