@@ -49,21 +49,19 @@
                             @foreach (var item in Model)
                             {
 
-                                <div class="flip-card ">
-                                    <div class="flip-card-inner ">
-                                <div class="flip-card-front " >
-                                            <img src="@item.Image" alt="Avatar" style="width:250px;height:400px;" class="rounded">
-                                        </div>
-                                        <div class="flip-card" >
-                                            <h1>@item.Name</h1>
-                                    <p><h4>Release: @item.ReleaseYear Genre: @(item.Genre?.Name ?? "Unknown") Rating: @item.Ratings</h4></p>
-                                            <h5>@item.Description</h5>
-                                            <p><a class="btn buto"asp-action="Details" asp-controller="Movies" 
-                                                asp-route-id="@item.Id">Click here for more details</a></p>
-                                        </div>
-                                    </div>
+                                <div class="flip-card">
+                                 <div class="flip-card-inner">
+                                 <div class="flip-card-front">
+                                    <img src="@item.Image" alt="Avatar" style="width:250px;height:400px;">
                                 </div>
-                                
+                                <div class="flip-card-back">
+                                    <h1>@item.Name</h1>
+                                    <p><h3>Released: @item.ReleaseYear Ratings:@item.Ratings</h3></p>
+                                    <p>@item.Description</p>
+                                    <a asp-action="Details" asp-controller="Movies" class="btn buto" asp-route-id="@item.Id">Click here for more Information</a>
+                                </div>
+                            </div>
+                        </div>
                                
                             }
                         </div>
