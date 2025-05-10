@@ -1,9 +1,0 @@
-﻿namespace Movies.Models
-{
-    public class Popularity
-    {
-        public int MovieId { get; set; }
-        public Movie? Movie { get; set; }
-        public int Views { get; set; }
-    }
-}

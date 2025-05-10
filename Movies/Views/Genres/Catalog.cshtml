@@ -7,19 +7,11 @@
 
 
 <div class="cat">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
+
                     <h1 style="color:white;">Films</h1>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
+
             @foreach (var genre in Model)
             {
-                <tr>
-                    <td>
                         <h3 style="color:white">@genre.Name</h3> <!-- Display Genre Name -->
                         <div class="container">
                             <div class="row">
@@ -38,9 +30,5 @@
                             </div>
                         </div>
 
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                }
 </div>

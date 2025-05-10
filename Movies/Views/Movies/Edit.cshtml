@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-<div class="cat">
+
 <h1>Edit</h1>
 
 <h4>Movie</h4>
@@ -49,6 +49,11 @@
                 <span asp-validation-for="Trailer" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Views" class="control-label"></label>
+                <input asp-for="Views" class="form-control" />
+                <span asp-validation-for="Views" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -58,7 +63,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-</div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

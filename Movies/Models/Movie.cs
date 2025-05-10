@@ -34,9 +34,9 @@
 
         public ICollection<MovieActors>? MovieActors { get; set; } = new List<MovieActors>();// Many-to-Many
 
-        public ICollection<Popularity>? Popularities { get; set; } // Views data
+       public int Views { get; set; } = 0; // Total views
 
         // Optional: To get the most recent or current views
-        public int CurrentViews => Popularities?.Sum(p => p.Views) ?? 0;
+
     }
 }

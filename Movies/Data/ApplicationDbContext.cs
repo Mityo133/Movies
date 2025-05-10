@@ -20,14 +20,12 @@ namespace Movies.Data
                 .HasKey(ma => new { ma.MovieId, ma.ActorId });
 
    
-            modelBuilder.Entity<Popularity>()
-                .HasKey(p => p.MovieId);
         }
 
         public DbSet<Actor> Actor { get; set; } = default!;
         public DbSet<Genres> Genres { get; set; } = default!;
         public DbSet<Movie> Movie { get; set; } = default!;
         public DbSet<MovieActors> MovieActors { get; set; } = default!;
-        public DbSet<Popularity> Popularity { get; set; } = default!;
+
     }
 }
