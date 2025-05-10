@@ -126,7 +126,11 @@ body {
         .sidenav a:hover {
             color: #f1f1f1;
         }
-
+.navbar-collapse {
+    display: flex;
+    justify-content: center; /* Centers the items horizontally */
+    align-items: center; /* Centers the items vertically */
+}
 
 @media screen and (max-height: 450px) {
     .sidenav {
@@ -136,4 +140,19 @@ body {
         .sidenav a {
             font-size: 18px;
         }
+}
+#myDIV {
+    margin: auto;
+    border: 1px solid black;
+    width: 200px;
+    height: 100px;
+    background-color: coral;
+    color: white;
+    animation: mymove 5s infinite;
+}
+
+@keyframes mymove {
+    50% {
+        transform: rotate(90deg);
+    }
 }

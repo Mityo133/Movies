@@ -18,31 +18,39 @@
     <header style ="font-family:'MyFont'; color:white;">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3 bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand bot" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-film"></i> Movies</a>
+                <a class="navbar-brand bot" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-clapperboard"></i> Movies</a>
                 <button class="navbar-toggler bot" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link bot" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house-door-fill"></i> Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link bot" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="bi bi-lock-fill"></i>Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link bot" asp-area="" asp-controller="Movies" asp-action="Catalog">Movies</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link bot" asp-area="" asp-controller="Actors" asp-action="ActorsList">Actors</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link bot" asp-area="" asp-controller="Genres" asp-action="Catalog">Genres</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center container">
+                    <div class="align-items-center">
+                        <!-- Remove the 'align-items-lg-center' and just use 'align-items-center' to vertically center -->
+                        <ul class="navbar-nav flex-grow-1 justify-content-center">
+                            <li class="nav-item">
+                                <a class="nav-link bot" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="bi bi-house-door-fill"></i> Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link bot" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                    <i class="bi bi-lock-fill"></i> Privacy
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link bot" asp-area="" asp-controller="Movies" asp-action="Catalog"><i class=""></i>Movies</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link bot" asp-area="" asp-controller="Actors" asp-action="ActorsList">Actors</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link bot" asp-area="" asp-controller="Genres" asp-action="Catalog">Genres</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+
+                <partial name="_LoginPartial" />
             </div>
         </nav>
 
