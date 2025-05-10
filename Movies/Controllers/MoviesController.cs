@@ -34,17 +34,19 @@ namespace Movies.Controllers
         //}
         public async Task<IActionResult> Catalog(string nameFilter, int? yearFilter, string? OptionToSortBy)
         {
-            var movies = from m in _context.Movie
+            var movies = from m in _context.Movie.Include(m => m.Genre)
                          select m;
-
+            //Check if the user has inputed any information for the film name
             if (!String.IsNullOrEmpty(nameFilter))
             {
                 movies = movies.Where(s => s.Name.Contains(nameFilter));
             }
+            // Check  if the user has inputed any information for the year
             if (yearFilter.HasValue)
             {
                 movies = movies.Where(s => s.ReleaseYear == yearFilter);
             }
+            // Check if we have chosen any option to sort by
             if (!String.IsNullOrEmpty(OptionToSortBy))
             {
                 if (OptionToSortBy == "AZ")

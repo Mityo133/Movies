@@ -12,13 +12,16 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Movies.styles.css" asp-append-version="true" />
+
 </head>
 <body>
 
     <header style ="font-family:'MyFont'; color:white;">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3 bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand bot" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-clapperboard"></i> Movies</a>
+                <a class="navbar-brand bot" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-clipboard-fill"></i>
+                    Movies</a>
                 <button class="navbar-toggler bot" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
