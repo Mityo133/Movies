@@ -4,62 +4,55 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="@Model.Image" class="img-fluid rounded-start" style="height:100%; object-fit:cover;" alt="@Model.Name Poster" />
+            </div>
+            <div class="col-md-8">
+                <div class="card-body p-4">
+                    <h2 class="card-title text-primary mb-4">@Model.Name</h2>
 
-<div>
-    <h4>Movie</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseYear)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseYear)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ratings)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ratings)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genre.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Trailer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Trailer)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Views)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Views)
-        </dd>
-    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-4">Release Year</dt>
+                        <dd class="col-sm-8">@Model.ReleaseYear</dd>
+
+                        <dt class="col-sm-4">Genre</dt>
+                        <dd class="col-sm-8">@Model.Genre?.Name</dd>
+
+                        <dt class="col-sm-4">Rating</dt>
+                        <dd class="col-sm-8 text-warning fw-bold">@Model.Ratings / 10</dd>
+
+                        <dt class="col-sm-4">Views</dt>
+                        <dd class="col-sm-8">@Model.Views</dd>
+
+                        <dt class="col-sm-4">Description</dt>
+                        <dd class="col-sm-8">@Model.Description</dd>
+
+                        <dt class="col-sm-4">Trailer</dt>
+                        <dd class="col-sm-8">
+                            @if (!string.IsNullOrWhiteSpace(Model.Trailer))
+                            {
+                                <a href="@Model.Trailer" class="btn btn-outline-danger btn-sm" target="_blank">Watch Trailer</a>
+                            }
+                            else
+                            {
+                                <span class="text-muted">No trailer available</span>
+                            }
+                        </dd>
+                    </dl>
+
+                    <div class="mt-4">
+                        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning me-2">Edit</a>
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
