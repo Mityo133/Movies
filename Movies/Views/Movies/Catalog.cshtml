@@ -28,28 +28,31 @@
 </form>
 
 
-<div class="cat">
+<div >
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
+                  
                     <h1 style="color:white;">Films</h1>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <div class="container">
-                        <div class="row">
+         
+                    <!--Checks if our collection has any elements-->
+                    @if (Model == null || !Model.Any())
+                    {
+                        <h1 class="text-white">The movie was not Found</h1>
+                    }
+                    else
+                    {
+                        
+                    <div class="d-flex flex-row">
+            
+            
+            <div class="container">
+                        <div class="row gap-5">
                             @foreach (var item in Model)
                             {
 
                                 <div class="flip-card">
                                     <div class="flip-card-inner">
                                         <div class="flip-card-front">
-                                            <img src="@item.Image" alt="Avatar" style="width:300px;height:300px;">
+                                            <img src="@item.Image" alt="Avatar" style="width:200px;height:300px;" class="rounded">
                                         </div>
                                         <div class="flip-card-back">
                                             <h1>@item.Name</h1>
@@ -65,8 +68,7 @@
                             }
                         </div>
                     </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    </div>
+                    }
+           
 </div>
