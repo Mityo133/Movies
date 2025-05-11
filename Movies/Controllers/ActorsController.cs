@@ -21,7 +21,7 @@ namespace Movies.Controllers
         }
 
         // ✅ Admin accses
-        [Authorize(Roles = "Admin")]
+        
         public async Task<IActionResult> Index(string searchString)
         {
             var movies = from m in _context.Actor
