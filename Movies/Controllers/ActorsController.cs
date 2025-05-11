@@ -20,7 +20,7 @@ namespace Movies.Controllers
             _context = context;
         }
 
-        // ✅ Admin accses
+        
         
         public async Task<IActionResult> Index(string searchString)
         {
@@ -48,7 +48,7 @@ namespace Movies.Controllers
 
 
 
-        // ✅ Public access
+        
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
@@ -71,7 +71,7 @@ namespace Movies.Controllers
             return View(actor);
         }
 
-        // ✅ Admin only
+        
         [Authorize(Roles = "Admin")]
 
         public IActionResult Create()
