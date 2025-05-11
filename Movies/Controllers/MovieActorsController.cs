@@ -48,6 +48,7 @@ namespace Movies.Controllers
         }
         [Authorize(Roles = "Admin")]
         // GET: MovieActors/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["ActorId"] = new SelectList(_context.Actor, "Id", "Id");
@@ -58,6 +59,7 @@ namespace Movies.Controllers
         // POST: MovieActors/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
